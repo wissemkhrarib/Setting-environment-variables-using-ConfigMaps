@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-db
+  labels:
+    app: mysql
+spec:
+  containers:
+    - image: mysql
+      name: mysql-container
+      ports:
+        - containerPort: 3306
+      env:
+        - name: MYSQL_ROOT_PASSWORD 
+          valueFrom:
+            configMapKeyRef: mysql-config # The ConfigMap this value comes from.
+            key: mysql-root-password # The key to fetch.
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef: mysql-config
+            key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            configMapKeyRef: mysql-config
+            key: mysql-password
